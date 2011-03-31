@@ -461,7 +461,8 @@ jQuery.extend( jQuery.fx, {
 		var timers = jQuery.timers;
 
 		for ( var i = 0; i < timers.length; i++ ) {
-			if ( !timers[i]() ) {
+			var timer = timers[i];
+			if ( !timer() && timer === timers[i]) {
 				timers.splice(i--, 1);
 			}
 		}
