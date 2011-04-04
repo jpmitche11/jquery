@@ -532,6 +532,25 @@ test("stop(clearQueue, gotoEnd)", function() {
 	}, 100);
 });
 
+
+test("animate( ..., function(){ stop(); } )", function() {
+	expect(1);	
+	stop();
+	
+	var $foo = jQuery("#foo");
+	$foo.hide().width(200);	
+	
+	$foo.animate({width: "+=100"}, 100, function(){
+    	$foo.stop();
+	    //this animation would be dropped
+	    $foo.animate({width: "+=100"}, 100);
+    });
+	setTimeout(function(){
+	   ok($foo.width() == 400, "inner stop killed the animation loop");
+	   start();
+	}, 300);
+});
+
 test("toggle()", function() {
 	expect(6);
 	var x = jQuery("#foo");
